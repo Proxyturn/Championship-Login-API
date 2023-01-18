@@ -1,6 +1,6 @@
 ﻿namespace Championship_Login_API.Models
 {
-    public class Competition
+    public class Match
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

@@ -3,7 +3,7 @@
     public class Ticket
     {
         public Guid Id { get; set; }
-        public Guid IdChampionship { get; set; }
+        public Guid IdMatch { get; set; }
         public Guid IdUser { get; set; }
         public int TicketNumber { get; set; }
     }

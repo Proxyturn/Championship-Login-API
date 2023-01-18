@@ -6,6 +6,8 @@
         public string? Title { get; set; }
         public DateTime StartDate { get; set; }
         public int TotalPhases { get; set; }
-        public Dictionary<Guid, int>? Ranking { get; set; }
+        public Guid WinnerTeam { get; set; }
+        public Guid SecondTeam { get; set; }
+        public Guid ThirdTeam { get; set; }
     }
 }

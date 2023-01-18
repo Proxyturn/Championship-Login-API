@@ -31,8 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseProject\DatabaseProject.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <ProjectReference Include="..\DatabaseProject\DatabaseProject.csproj" />
   </ItemGroup>
 </Project>
