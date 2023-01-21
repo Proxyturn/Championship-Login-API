@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Championship-Login-API", "Championship-Login-API\Championship-Login-API.csproj", "{FE85D48B-DE04-47C3-A9D3-4CE7D3434449}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAPI", "Championship-Login-API\CoreAPI.csproj", "{FE85D48B-DE04-47C3-A9D3-4CE7D3434449}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseProject", "DatabaseProject\DatabaseProject.csproj", "{470BC11B-55D7-499E-B357-82F1A326C94A}"
 EndProject
