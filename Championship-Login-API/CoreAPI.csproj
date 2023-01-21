@@ -33,6 +33,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseProject\DatabaseProject.csproj" />
+    <ProjectReference Include="..\TeamAPI\TeamAPI.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\" />
