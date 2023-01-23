@@ -10,6 +10,6 @@ namespace Championship_Login_API.Models
         public string? Email { get; set; }
         public string? Password { get; set; }
         public UserEnum UserType { get; set; }
-        public Guid IdTeam { get; set; }
+        public Guid? IdTeam { get; set; }
     }
 }
