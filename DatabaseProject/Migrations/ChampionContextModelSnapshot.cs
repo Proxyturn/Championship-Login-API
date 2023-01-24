@@ -141,7 +141,7 @@ namespace DatabaseProject.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdTeam")
+                    b.Property<Guid?>("IdTeam")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")

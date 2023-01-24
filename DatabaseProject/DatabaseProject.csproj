@@ -14,9 +14,13 @@
     <None Remove="Microsoft.Extensions.Configuration.FileExtensions" />
     <None Remove="Enums\" />
     <None Remove="Microsoft.Extensions.Configuration.Json" />
+    <None Remove="Models\Auth\" />
+    <None Remove="Models\Auth\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Models\Auth\" />
+    <Folder Include="Models\Auth\Request\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
@@ -27,5 +31,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Services\DbService.cs" />
+    <Compile Remove="DesignTimeDbContextFactory.cs" />
   </ItemGroup>
 </Project>
