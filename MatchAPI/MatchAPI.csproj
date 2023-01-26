@@ -13,12 +13,10 @@
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Business\" />
-    <None Remove="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Business\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseProject\DatabaseProject.csproj">
