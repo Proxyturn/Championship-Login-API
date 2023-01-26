@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using Championship_Login_API.Models;
 using CoreAPI.Util;
 using DatabaseProject;
@@ -21,9 +22,9 @@ namespace CoreAPI.Repositories
             try
             {
                 
-                    User existUser = _dbContext.Users.Where(w=>w.Email ==userMail).FirstOrDefault();
+                User existUser = _dbContext.Users.Where(w=>w.Email ==userMail).FirstOrDefault();
 
-                    return existUser;
+                return existUser;
                 
 
             }
@@ -82,6 +83,68 @@ namespace CoreAPI.Repositories
             catch (Exception ex)
             {
                 throw new Exception("Não foi possível verificar login do usuário.");
+            }
+        }
+
+        public async Task<User> GetUserById(Guid id)
+        {
+            try
+            {
+                var existUser = _dbContext.Users.Where(w => w.Id == id)?.FirstOrDefault();
+
+                if (existUser != null)
+                    return existUser;                
+                else
+                    throw new Exception("Usuário informado não foi encontrado");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> DeleteUserAsync(Guid id)
+        {
+            try
+            {
+                var existUser = _dbContext.Users.Where(w => w.Id == id)?.FirstOrDefault();
+
+                if (existUser != null)
+                {
+                    _dbContext.Users.Remove(existUser);
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    throw new Exception("Usuário informado não foi encontrado");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<User> UpdateUserAsync(UpdateUser updateUser)
+        {
+            try
+            {
+                var existUser = _dbContext.Users.Where(w => w.Id == updateUser.Id)?.FirstOrDefault();
+
+                if (existUser != null)
+                {
+                    existUser.Age = updateUser.Age;
+                    existUser.Name = updateUser.Name;
+                    existUser.UserType = updateUser.UserType;
+                    _dbContext.SaveChanges();
+                    existUser = _dbContext.Users.Where(w => w.Id == updateUser.Id)?.FirstOrDefault();
+                    return existUser;
+                }
+                else
+                    throw new Exception("Usuário informado não foi encontrado");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

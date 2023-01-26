@@ -97,6 +97,66 @@ namespace CoreAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById([FromServices] UserBusiness userBusiness, Guid id)
+        {
+            try
+            {
+                var user = await userBusiness.GetUserByIdAsync(id);
+
+                return StatusCode(200, user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUserAsync([FromServices] UserBusiness userBusiness, Guid id)
+        {
+            try
+            {
+                var sucess = await userBusiness.DeleteUserAsync(id);
+
+                if (!sucess)
+                {
+                    return NotFound(
+                       new
+                       {
+                           status = HttpStatusCode.NotFound,
+                           Error = "Não foi possível deletar usuário informado"
+                       });
+                }
+                else
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUserAsync([FromServices] UserBusiness userBusiness, UpdateUser updateUser)
+        {
+            try
+            {
+                var updatedUser = await userBusiness.UpdateUserAsync(updateUser);
+
+                return StatusCode(200, $"Updated User:${updatedUser}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
 

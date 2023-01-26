@@ -48,6 +48,43 @@ namespace CoreAPI.Business
             }
             
         }
+
+        public async Task<bool> DeleteUserAsync(Guid id)
+        {
+            try
+            {
+                return await _userRepository.DeleteUserAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<User> UpdateUserAsync(UpdateUser updateUser)
+        {
+            try
+            {
+                return await _userRepository.UpdateUserAsync(updateUser);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<User> GetUserByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _userRepository.GetUserById(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
 
