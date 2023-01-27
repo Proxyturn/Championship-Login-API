@@ -19,7 +19,6 @@ namespace TeamAPI.Controllers
             _teamBusiness = teamBusiness;
         }
 
-        
         [HttpGet]
         public async Task<IActionResult> GetUserTeam()
         {

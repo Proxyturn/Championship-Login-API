@@ -150,7 +150,7 @@ namespace CoreAPI.Controllers
             {
                 var updatedUser = await userBusiness.UpdateUserAsync(updateUser);
 
-                return StatusCode(200, $"Updated User:${updatedUser}");
+                return StatusCode(200, updatedUser);
             }
             catch (Exception ex)
             {
