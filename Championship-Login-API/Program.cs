@@ -72,9 +72,7 @@ void BuildOptions(DbContextOptionsBuilder options) => options
     .EnableSensitiveDataLogging();
 
 #region Dependency Injection
-builder.Services.AddTransient<UserBusiness>();
-builder.Services.AddTransient<UserRepository>();
-builder.Services.AddTransient<TokenService>();
+builder.Services.AddChampionshipDependencies();
 #endregion
 
 builder.Services.AddDbContext<ChampionContext>(BuildOptions);

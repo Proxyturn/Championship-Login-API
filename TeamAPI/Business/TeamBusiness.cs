@@ -6,6 +6,11 @@ namespace TeamAPI.Business
 		public TeamBusiness()
 		{
 		}
-	}
+
+		public object GetUserTeam()
+		{
+			return "PAO";
+		}
+    }
 }
 
