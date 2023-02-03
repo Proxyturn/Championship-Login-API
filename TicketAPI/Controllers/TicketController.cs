@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TicketAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/ticket")]
     public class TicketController : Controller
     {
         // GET: api/values

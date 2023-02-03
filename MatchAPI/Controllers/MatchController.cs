@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MatchAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/match")]
     public class MatchController : Controller
     {
         // GET: api/values
