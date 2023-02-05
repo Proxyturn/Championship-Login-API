@@ -27,6 +27,7 @@ namespace DatabaseProject
         public DbSet<Championship> Championships { get; set; }
         public DbSet<Match> Competitions { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<ChampionshipReferee> ChampionshipReferees { get; set; }
         #endregion
     }
 }
