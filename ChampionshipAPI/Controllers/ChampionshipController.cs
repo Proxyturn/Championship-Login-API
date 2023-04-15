@@ -69,6 +69,7 @@ namespace ChampionshipAPI.Controllers
         {
             try
             {
+                
                 return StatusCode(200, await _championshipBusiness.GetById(id, false));
             }
             catch (Exception ex)
