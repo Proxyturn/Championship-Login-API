@@ -116,6 +116,44 @@ namespace ChampionshipAPI.Controllers
         }
 
         /// <summary>
+        /// Start a championship, generate all matchs
+        /// </summary>
+        /// <param name="createChampionship"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("/startChampionship")]
+        public async Task<IActionResult> StartChampionship([FromBody] Guid IdChampionship)
+        {
+            try
+            {
+                return StatusCode(200, await _championshipBusiness.StartChampionship(IdChampionship));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// End championship, generate top ranking
+        /// </summary>
+        /// <param name="createChampionship"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("/finishChampionship")]
+        public async Task<IActionResult> FinishChampionship([FromBody] Guid IdChampionship)
+        {
+            try
+            {
+                return StatusCode(200, await _championshipBusiness.FinishChampionship(IdChampionship));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Update existing championship
         /// </summary>
         /// <param name="id"></param>

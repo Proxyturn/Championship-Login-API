@@ -109,6 +109,98 @@ namespace ChampionshipAPI.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<bool> StartChampionship(Guid idChampionship)
+        {
+            try
+            {
+                var championship = await GetById(idChampionship, false);
+                if (championship != null)
+                {
+                    List<Team> subsTeams = _dbContext.Teams.Where(w => w.IdChampionship == idChampionship).ToList();
+                    List<ChampionshipReferee> subsRef = _dbContext.ChampionshipReferees.Where(cref => cref.ChampionshipId == idChampionship).ToList();
+
+                    //impar
+                    if (subsTeams.Count() % 2 != 0)
+                        subsTeams.Add(new Team()
+                        {
+                            Id = Guid.Empty,
+                            IdChampionship = idChampionship,
+                            Name = "W.O."
+                        });
+
+                    //phase 1
+                    int match = 1;
+                    for (int i = 0; i < subsTeams.Count()-1; i = 1+2)
+                    {
+                        _dbContext.Matchs.Add(new Match()
+                        {
+                            Id = Guid.NewGuid(),
+                            IdChampion = idChampionship,
+                            IdReferee = subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId,
+                            Location = "",
+                            Name = $"Confronto {match}",
+                            PhaseNumber = 1,
+                            StartDate = championship.StartDate,
+                            TeamA = subsTeams[i].Id,
+                            TeamB = subsTeams[i+1].Id,
+                            TotalTickets = 100
+                        });
+                        match++;
+                    }
+
+                    var totalTeams = subsTeams.Count() / 2;
+                    //phase >2 until championshipTotalPhases
+                    for (int i = 2; i <= championship.TotalPhases; i++)
+                    {
+                        for (int j = 0; j < totalTeams; j = j+2)
+                        {
+                            _dbContext.Matchs.Add(new Match()
+                            {
+                                Id = Guid.NewGuid(),
+                                IdChampion = idChampionship,
+                                IdReferee = subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId,
+                                Location = "",
+                                Name = $"Confronto {match}",
+                                PhaseNumber = i,
+                                StartDate = championship.StartDate,
+                                TeamA = Guid.Empty,
+                                TeamB = Guid.Empty,
+                                TotalTickets = 100
+                            });
+                            match++;
+                        }
+                        totalTeams = totalTeams / 2;
+                    }
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> FinishChampionship(Guid idChampionship)
+        {
+            try
+            {
+                var championship = await GetById(idChampionship, false);
+                if (championship != null)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
 

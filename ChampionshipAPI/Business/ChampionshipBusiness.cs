@@ -73,6 +73,30 @@ namespace ChampionshipAPI.Business
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<bool> StartChampionship(Guid idChampionship)
+        {
+            try
+            {
+                return await _championshipRepository.StartChampionship(idChampionship);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> FinishChampionship(Guid idChampionship)
+        {
+            try
+            {
+                return await _championshipRepository.FinishChampionship(idChampionship);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
 
