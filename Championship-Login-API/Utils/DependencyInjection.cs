@@ -16,12 +16,14 @@ namespace CoreAPI.Utils
         {
             #region Business Layer
             services.AddTransient<UserBusiness>();
+            services.AddTransient<RefereeBusiness>();
             services.AddTransient<ChampionshipBusiness>();
             services.AddTransient<TeamBusiness>();
             #endregion
 
             #region Repository Layer
             services.AddTransient<UserRepository>();
+            services.AddTransient<RefereeRepository>();
             services.AddTransient<ChampionshipRepository>();
             services.AddTransient<TeamRepository>();
             #endregion
