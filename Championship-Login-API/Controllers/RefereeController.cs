@@ -6,6 +6,7 @@ using Championship_Login_API.Models;
 using ChampionshipAPI.Business;
 using CoreAPI.Business;
 using DatabaseProject.Models.Auth.Request;
+using DatabaseProject.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,10 +23,7 @@ namespace CoreAPI.Controllers
         {
             _refereeBusiness = refereeBusiness;
         }
-        /// <summary>
-        /// Get all the registered referes
-        /// </summary>
-        /// <returns></returns>
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -39,11 +37,6 @@ namespace CoreAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get the infos of a specific refereee
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -57,11 +50,6 @@ namespace CoreAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Create new referee
-        /// </summary>
-        /// <param name="newUser"></param>
-        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]NewUser newUser)
         {
@@ -75,11 +63,19 @@ namespace CoreAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Update a specific referee
-        /// </summary>
-        /// <param name="updateUser"></param>
-        /// <returns></returns>
+        [HttpPost("/registerChampionship")]
+        public async Task<IActionResult> RegisterChampionship([FromBody] RegisterRefereeChampionship registerRefereeChampionship)
+        {
+            try
+            {
+                return StatusCode(201, await _refereeBusiness.RegisterChampionship(registerRefereeChampionship));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateUser updateUser)
         {
@@ -93,11 +89,6 @@ namespace CoreAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete an specific referee
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

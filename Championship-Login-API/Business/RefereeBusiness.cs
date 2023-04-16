@@ -3,6 +3,7 @@ using Championship_Login_API.Models;
 using CoreAPI.Repositories;
 using CoreAPI.Util;
 using DatabaseProject.Models.Auth.Request;
+using DatabaseProject.Models.Request;
 
 namespace CoreAPI.Business
 {
@@ -71,6 +72,18 @@ namespace CoreAPI.Business
             try
             {
                 return await _userRepository.DeleteUserAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> RegisterChampionship(RegisterRefereeChampionship registerRefereeChampionship)
+        {
+            try
+            {
+                return await _userRepository.RegisterChampionship(registerRefereeChampionship);
             }
             catch (Exception ex)
             {

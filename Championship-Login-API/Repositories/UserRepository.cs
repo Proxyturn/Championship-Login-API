@@ -4,6 +4,7 @@ using Championship_Login_API.Models;
 using CoreAPI.Util;
 using DatabaseProject;
 using DatabaseProject.Models.Auth.Request;
+using DatabaseProject.Models.Request;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreAPI.Repositories
@@ -117,6 +118,36 @@ namespace CoreAPI.Repositories
                 }
                 else
                     throw new Exception("Usuário informado não foi encontrado");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> RegisterChampionship(RegisterRefereeChampionship registerRefereeChampionship)
+        {
+            try
+            {
+                var existUser = _dbContext.Users.Where(w => w.Id == registerRefereeChampionship.IdReferee)?.FirstOrDefault();
+                var existChampionship = _dbContext.Championships.Where(w => w.Id == registerRefereeChampionship.IdChampionship)?.FirstOrDefault();
+                if(existUser != null && existChampionship != null)
+                {
+                    _dbContext.ChampionshipReferees.Add(new ChampionshipReferee()
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = registerRefereeChampionship.IdReferee,
+                        ChampionshipId = registerRefereeChampionship.IdChampionship
+                    });
+                    _dbContext.SaveChanges();
+                }
+
+                if (existUser == null)
+                    throw new Exception("Usuário não encontrado");
+                if (existChampionship == null)
+                    throw new Exception("Campeonato não encontrado");
+
+                return true;
             }
             catch (Exception ex)
             {
