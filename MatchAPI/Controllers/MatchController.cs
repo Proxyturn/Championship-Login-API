@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseProject.Models.Auth.Request;
+using MatchAPI.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,14 +14,25 @@ namespace MatchAPI.Controllers
     [Route("api/match")]
     public class MatchController : Controller
     {
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private MatchBusiness _matchBusiness;
+        public MatchController(MatchBusiness matchBusiness)
         {
-            return new string[] { "value1", "value2" };
+            _matchBusiness = matchBusiness;
         }
 
-        
+        [HttpGet("/getByRefereeId/{IdReferee}")]
+        public async Task<IActionResult> GetByRefereeId(Guid IdReferee)
+        {
+            try
+            {
+                return StatusCode(200, await _matchBusiness.GetByRefereeId(IdReferee));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
 
