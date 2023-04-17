@@ -1,5 +1,6 @@
 ﻿using System;
 using Championship_Login_API.Models;
+using DatabaseProject.Models.Response;
 using MatchAPI.Repository;
 
 namespace MatchAPI.Business
@@ -12,7 +13,7 @@ namespace MatchAPI.Business
             _matchRepository = matchRepository;
 		}
 
-        public async Task<List<Match>> GetByRefereeId(Guid IdReferee)
+        public async Task<List<MatchListResponse>> GetByRefereeId(Guid IdReferee)
         {
             try
             {
