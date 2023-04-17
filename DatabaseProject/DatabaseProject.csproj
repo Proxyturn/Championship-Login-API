@@ -36,6 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\DbService.cs" />
-    <Compile Remove="DesignTimeDbContextFactory.cs" />
+    <Compile Remove="Program.cs" />
   </ItemGroup>
 </Project>

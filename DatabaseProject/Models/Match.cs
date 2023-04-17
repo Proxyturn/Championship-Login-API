@@ -1,4 +1,6 @@
-﻿namespace Championship_Login_API.Models
+﻿using DatabaseProject.Enums;
+
+namespace Championship_Login_API.Models
 {
     public class Match
     {
@@ -12,5 +14,6 @@
         public Guid IdReferee { get; set; }
         public Guid TeamA { get; set; }
         public Guid TeamB { get; set; }
+        public MatchStatusEnum Status { get; set; }
     }
 }
