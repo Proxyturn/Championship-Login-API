@@ -56,6 +56,7 @@ namespace ChampionshipAPI.Repository
                 {
                     _dbContext.Championships.Add(new Championship {
                         Title = createChampionship.Title,
+                        Description = createChampionship.Description,
                         StartDate = createChampionship.StartDate,
                         TotalPhases = createChampionship.TotalPhases
                     });

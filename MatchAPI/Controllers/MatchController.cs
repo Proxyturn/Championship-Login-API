@@ -33,6 +33,18 @@ namespace MatchAPI.Controllers
             }
         }
 
+        [HttpGet("/getMatchById/{IdMatch}")]
+        public async Task<IActionResult> GetMatchId(Guid IdMatch)
+        {
+            try
+            {
+                return StatusCode(200, await _matchBusiness.GetMatchById(IdMatch));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
 

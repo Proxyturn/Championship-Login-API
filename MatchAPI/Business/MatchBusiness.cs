@@ -24,6 +24,18 @@ namespace MatchAPI.Business
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<MatchDetailResponse> GetMatchById(Guid IdMatch)
+        {
+            try
+            {
+                return await _matchRepository.GetMatchById(IdMatch);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
 
