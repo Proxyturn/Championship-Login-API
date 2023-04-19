@@ -72,7 +72,7 @@ namespace MatchAPI.Repository
                         TeamBName = match.TeamB == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == match.TeamB)?.FirstOrDefault().Name,
                         Status = match.Status,
                         ChampionshipName = existChampionship?.Title,
-                        ChampionshipDetail = existChampionship?.Description == null? "Não foi registrada uma descrição para esta comepetição" : existChampionship.Description,
+                        ChampionshipDetail = existChampionship?.Description == null? "Não foi registrada uma descrição para esta competição" : existChampionship.Description,
                         MatchOcurrence = null
                     };
                 }

@@ -14,7 +14,7 @@ namespace ChampionshipAPI.Business
 			_championshipRepository = championshipRepository;
 		}
 
-        public async Task<List<Championship>> GetAll(Boolean external=true)
+        public async Task<object> GetAll(Boolean external=true)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace ChampionshipAPI.Business
             }
         }
 
-        public async Task<Championship> GetById(Guid id, Boolean external = true)
+        public async Task<object> GetById(Guid id, Boolean external = true)
         {
             try
             {

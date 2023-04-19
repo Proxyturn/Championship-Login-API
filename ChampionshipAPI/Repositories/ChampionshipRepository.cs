@@ -2,6 +2,7 @@
 using Championship_Login_API.Models;
 using DatabaseProject;
 using DatabaseProject.Models.Request;
+using DatabaseProject.Models.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChampionshipAPI.Repository
@@ -14,14 +15,28 @@ namespace ChampionshipAPI.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<List<Championship>> GetAll(Boolean external = true)
+        public async Task<object> GetAll(Boolean external = true)
         {
             try
             {
                 List<Championship> championships = _dbContext.Championships.OrderBy(ob=>ob.Id).ThenBy(ob=>ob.StartDate)?.ToList();
                 if (external)
-                    Console.WriteLine("Se houver alguma regra de negócio a ser aplicada neste ponto fica.");
-                
+                {
+                    List<ChampionshipExternalListResponse> externalList = new List<ChampionshipExternalListResponse>();
+                    foreach (var championship in championships)
+                    {
+                        externalList.Add(new ChampionshipExternalListResponse()
+                        {
+                            Id = championship.Id,
+                            Title = championship.Title,
+                            Description = championship.Description == null? "Não foi registrada uma descrição para esta competição" : championship.Description,
+                            StartDate = championship.StartDate.ToString("dd/MM/yyyy HH:mm"),
+                            Status = championship.Status
+                        });
+
+                    }
+                    return externalList;
+                }
                 return championships;
             }
             catch (Exception ex)
@@ -30,14 +45,17 @@ namespace ChampionshipAPI.Repository
             }
         }
 
-        public async Task<Championship?> GetById(Guid id, Boolean external = true)
+        public async Task<object> GetById(Guid id, Boolean external = true)
         {
             try
             {
                 Championship championships = _dbContext.Championships.Where(w=>w.Id == id).FirstOrDefault();
                 if (external)
                 {
-                    Console.WriteLine("Se houver alguma regra de negócio a ser aplicada neste ponto fica.");
+                    return new ChampionshipExternalDetail()
+                    {
+                        Teste = "Detalhe Competicao Externo"
+                    };
                 }
                     
                 return championships;
@@ -95,7 +113,7 @@ namespace ChampionshipAPI.Repository
         {
             try
             {
-                var championship = await GetById(id,false);
+                var championship = (await GetById(id,false)) as Championship;
                 if (championship != null)
                 {
                     _dbContext.Championships.Remove(championship);
@@ -115,7 +133,7 @@ namespace ChampionshipAPI.Repository
         {
             try
             {
-                var championship = await GetById(idChampionship, false);
+                var championship = (await GetById(idChampionship, false)) as Championship;
                 if (championship != null)
                 {
                     List<Team> subsTeams = _dbContext.Teams.Where(w => w.IdChampionship == idChampionship).ToList();
