@@ -6,5 +6,6 @@
         public string? Name { get; set; }
         public Guid IdChampionship { get; set; }
         public Guid IdLeader { get; set; }
+        public int Wins { get; set; }
     }
 }
