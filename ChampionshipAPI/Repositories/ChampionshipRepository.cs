@@ -52,9 +52,50 @@ namespace ChampionshipAPI.Repository
                 Championship championships = _dbContext.Championships.Where(w=>w.Id == id).FirstOrDefault();
                 if (external)
                 {
+                    List<TeamsExternalDetail> subsTeams = new List<TeamsExternalDetail>();
+                    List<MatchExternalDetail> matches = new List<MatchExternalDetail>();
+
+                    subsTeams = (from teams in _dbContext.Teams
+                                where  teams.IdChampionship == id
+                                orderby teams.Wins
+                                select new TeamsExternalDetail
+                                {
+                                    IdTeam = teams.Id,
+                                    Name = teams.Name,
+                                    Wins = teams.Wins
+                                }).ToList();
+                    matches = (from matchs in _dbContext.Matchs
+                               where matchs.IdChampion == id
+                               join users in _dbContext.Users on matchs.IdReferee equals users.Id
+                               orderby matchs.PhaseNumber
+                               select new MatchExternalDetail
+                               {
+                                   IdMatch = matchs.Id,
+                                   Name = matchs.Name,
+                                   PhaseNumber = matchs.PhaseNumber,
+                                   TotalTickets = matchs.TotalTickets,
+                                   StartDate = matchs.StartDate.ToString("dd/MM/yyyy HH:mm"),
+                                   Status = matchs.Status,
+                                   IdTeamB = matchs.TeamB,
+                                   IdTeamA = matchs.TeamA,
+                                   RefereeName = users.Name,
+                                   TeamAName = matchs.TeamA == Guid.Empty? "W.O": _dbContext.Teams.Where(w=>w.Id == matchs.TeamA).FirstOrDefault().Name,
+                                   TeamBName = matchs.TeamB == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == matchs.TeamB).FirstOrDefault().Name,
+                                   SoldTickets = (from tickets in _dbContext.Tickets
+                                                  where tickets.IdMatch == matchs.Id
+                                                  select tickets
+                                                  ).Count()
+                               }).ToList();
+
                     return new ChampionshipExternalDetail()
                     {
-                        Teste = "Detalhe Competicao Externo"
+                        Title = championships.Title,
+                        Description = championships.Description,
+                        StartDate= championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
+                        EndDate = "-",
+                        Subscription = subsTeams == null? 0:subsTeams.Count(),
+                        Ranking = subsTeams,
+                        Matchs = matches
                     };
                 }
                     
