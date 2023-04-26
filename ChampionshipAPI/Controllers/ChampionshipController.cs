@@ -26,7 +26,7 @@ namespace ChampionshipAPI.Controllers
         /// GetAll the Championships in internal level with Auth
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("/internal")]
         public async Task<IActionResult> GetAllInternal()
         {
@@ -63,7 +63,7 @@ namespace ChampionshipAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("/internal/{id}")]
         public async Task<IActionResult> GetByIdInternal(Guid id)
         {
@@ -101,7 +101,7 @@ namespace ChampionshipAPI.Controllers
         /// Create new Championship
         /// </summary>
         /// <param name="value"></param>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateChampionship createChampionship)
         {
@@ -120,7 +120,7 @@ namespace ChampionshipAPI.Controllers
         /// </summary>
         /// <param name="createChampionship"></param>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("/startChampionship")]
         public async Task<IActionResult> StartChampionship([FromBody] Guid IdChampionship)
         {
@@ -139,7 +139,7 @@ namespace ChampionshipAPI.Controllers
         /// </summary>
         /// <param name="createChampionship"></param>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("/finishChampionship")]
         public async Task<IActionResult> FinishChampionship([FromBody] Guid IdChampionship)
         {
@@ -158,7 +158,7 @@ namespace ChampionshipAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="value"></param>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody]Championship championship)
         {
@@ -176,7 +176,7 @@ namespace ChampionshipAPI.Controllers
         /// Delete an specific championship
         /// </summary>
         /// <param name="id"></param>
-        [Authorize]
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

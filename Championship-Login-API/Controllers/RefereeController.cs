@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/referee")]
     public class RefereeController : Controller
     {

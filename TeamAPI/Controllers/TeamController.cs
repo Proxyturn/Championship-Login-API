@@ -9,7 +9,7 @@ using TeamAPI.Business;
 
 namespace TeamAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/team")]
     public class TeamController : Controller
     {
@@ -34,7 +34,7 @@ namespace TeamAPI.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateTeam createTeam)
         {

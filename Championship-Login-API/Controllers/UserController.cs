@@ -98,7 +98,7 @@ namespace CoreAPI.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromServices] UserBusiness userBusiness, Guid id)
         {
@@ -114,7 +114,7 @@ namespace CoreAPI.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserAsync([FromServices] UserBusiness userBusiness, Guid id)
         {
@@ -142,7 +142,7 @@ namespace CoreAPI.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUserAsync([FromServices] UserBusiness userBusiness, UpdateUser updateUser)
         {
