@@ -4,6 +4,7 @@ using DatabaseProject.Models.Response;
 using DatabaseProject.Enums;
 using Microsoft.EntityFrameworkCore;
 using Championship_Login_API.Models;
+using DatabaseProject.Models.Request;
 
 namespace TicketAPI.Repositories
 {
@@ -37,6 +38,31 @@ namespace TicketAPI.Repositories
                                     }).ToList();
                 
                 return ticketsGroup;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> Insert(Guid matchId, string userId)
+        {
+            try
+            {
+                if (matchId != Guid.Empty)
+                {
+                    _dbContext.Tickets.Add(new Ticket
+                    {
+                        Id = Guid.NewGuid(),
+                        IdMatch = matchId,
+                        IdUser = Guid.Parse(userId),
+                        TicketNumber = _dbContext.Tickets.Where(w=>w.IdMatch == matchId).Count()+1
+                    });
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {
