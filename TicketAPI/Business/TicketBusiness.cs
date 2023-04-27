@@ -12,7 +12,7 @@ namespace TicketAPI.Business
 			_ticketRepository = ticketRepository;
 		}
 
-        public async Task<object> GetAllAvailable()
+        public async Task<List<AvailableTicketListResponse>> GetAllAvailable()
         {
             try
             {
