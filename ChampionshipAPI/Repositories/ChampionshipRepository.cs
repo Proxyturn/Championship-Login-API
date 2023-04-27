@@ -37,6 +37,12 @@ namespace ChampionshipAPI.Repository
                     }
                     return externalList;
                 }
+                else
+                {
+                    championships.ForEach(fe => {
+                        fe.Description = fe.Description == null ?"Não foi registrada uma descrição para esta competição": fe.Description;
+                    });
+                }
                 return championships;
             }
             catch (Exception ex)
@@ -90,10 +96,10 @@ namespace ChampionshipAPI.Repository
                     return new ChampionshipExternalDetail()
                     {
                         Title = championships.Title,
-                        Description = championships.Description,
+                        Description = championships.Description == null ? "Não foi registrada uma descrição para esta competição" : championships.Description,
                         StartDate= championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
                         EndDate = "-",
-                        Subscription = subsTeams == null? 0:subsTeams.Count(),
+                        Subscription = subsTeams == null? 0 : subsTeams.Count(),
                         Ranking = subsTeams,
                         Matchs = matches
                     };

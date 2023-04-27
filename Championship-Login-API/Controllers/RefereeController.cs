@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Championship_Login_API.Models;
-using ChampionshipAPI.Business;
 using CoreAPI.Business;
 using DatabaseProject.Models.Auth.Request;
 using DatabaseProject.Models.Request;
