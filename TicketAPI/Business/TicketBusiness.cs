@@ -1,11 +1,28 @@
 ﻿using System;
+using DatabaseProject.Models.Response;
+using TicketAPI.Repositories;
+
 namespace TicketAPI.Business
 {
 	public class TicketBusiness
 	{
-		public TicketBusiness()
+		private TicketRepository _ticketRepository;
+		public TicketBusiness(TicketRepository ticketRepository)
 		{
+			_ticketRepository = ticketRepository;
 		}
-	}
+
+        public async Task<object> GetAllAvailable()
+        {
+            try
+            {
+                return await _ticketRepository.GetAllAvailable();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
 }
 

@@ -8,6 +8,8 @@ using MatchAPI.Business;
 using MatchAPI.Repository;
 using TeamAPI.Business;
 using TeamAPI.Repositories;
+using TicketAPI.Business;
+using TicketAPI.Repositories;
 
 namespace CoreAPI.Utils
 {
@@ -22,6 +24,7 @@ namespace CoreAPI.Utils
             services.AddTransient<ChampionshipBusiness>();
             services.AddTransient<TeamBusiness>();
             services.AddTransient<MatchBusiness>();
+            services.AddTransient<TicketBusiness>();
             #endregion
 
             #region Repository Layer
@@ -30,6 +33,7 @@ namespace CoreAPI.Utils
             services.AddTransient<ChampionshipRepository>();
             services.AddTransient<TeamRepository>();
             services.AddTransient<MatchRepository>();
+            services.AddTransient<TicketRepository>();
             #endregion
 
             services.AddTransient<TokenService>();
