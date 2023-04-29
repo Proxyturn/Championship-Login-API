@@ -50,7 +50,7 @@ namespace ChampionshipAPI.Business
             }
         }
 
-        public async Task<bool> Update(Championship championship)
+        public async Task<bool> Update(UpdateChampionship championship)
         {
             try
             {

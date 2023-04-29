@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using Championship_Login_API.Enums;
 using Championship_Login_API.Models;
 using CoreAPI.Util;
 using DatabaseProject;
@@ -165,7 +166,7 @@ namespace CoreAPI.Repositories
                 {
                     existUser.Age = updateUser.Age;
                     existUser.Name = updateUser.Name;
-                    existUser.UserType = updateUser.UserType;
+                    existUser.Email = updateUser.Email;
                     _dbContext.SaveChanges();
                     existUser = _dbContext.Users.Where(w => w.Id == updateUser.Id)?.FirstOrDefault();
                     return existUser;
@@ -178,6 +179,19 @@ namespace CoreAPI.Repositories
                 throw ex;
             }
         }
+
+        public async Task<List<User>> GetUserByUserEnum(UserEnum userEnum)
+        {
+            try
+            {
+                return _dbContext.Users.Where(w => w.UserType == userEnum)?.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }
 

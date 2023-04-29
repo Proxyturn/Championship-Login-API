@@ -11,6 +11,7 @@ namespace DatabaseProject.Models.Response
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int Subscription { get; set; }
+        public ChampionshipStatusEnum Status { get; set; }
         public List<TeamsExternalDetail> Ranking { get; set; }
         public List<MatchExternalDetail> Matchs { get; set; }
     }

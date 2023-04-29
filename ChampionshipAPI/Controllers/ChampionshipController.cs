@@ -159,8 +159,8 @@ namespace ChampionshipAPI.Controllers
         /// <param name="id"></param>
         /// <param name="value"></param>
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody]Championship championship)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateChampionship championship)
         {
             try
             {

@@ -20,8 +20,8 @@ namespace ChampionshipAPI.Repository
             try
             {
                 List<Championship> championships = _dbContext.Championships.OrderBy(ob=>ob.Id).ThenBy(ob=>ob.StartDate)?.ToList();
-                if (external)
-                {
+                //if (external)
+                //{
                     List<ChampionshipExternalListResponse> externalList = new List<ChampionshipExternalListResponse>();
                     foreach (var championship in championships)
                     {
@@ -36,7 +36,7 @@ namespace ChampionshipAPI.Repository
 
                     }
                     return externalList;
-                }
+                //}
                 return championships;
             }
             catch (Exception ex)
@@ -50,8 +50,8 @@ namespace ChampionshipAPI.Repository
             try
             {
                 Championship championships = _dbContext.Championships.Where(w=>w.Id == id).FirstOrDefault();
-                if (external)
-                {
+                //if (external)
+                //{
                     List<TeamsExternalDetail> subsTeams = new List<TeamsExternalDetail>();
                     List<MatchExternalDetail> matches = new List<MatchExternalDetail>();
 
@@ -90,14 +90,15 @@ namespace ChampionshipAPI.Repository
                     return new ChampionshipExternalDetail()
                     {
                         Title = championships.Title,
-                        Description = championships.Description,
+                        Description = championships.Description == null ? "Não foi registrada uma descrição para esta competição" : championships.Description,
+                        Status = championships.Status,
                         StartDate= championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
                         EndDate = "-",
                         Subscription = subsTeams == null? 0:subsTeams.Count(),
                         Ranking = subsTeams,
                         Matchs = matches
                     };
-                }
+                //}
                     
                 return championships;
             }
@@ -131,18 +132,28 @@ namespace ChampionshipAPI.Repository
             }
         }
 
-        public async Task<bool> Update(Championship championship)
+        public async Task<bool> Update(UpdateChampionship championship)
         {
             try
             {
-                if (championship != null)
+                Championship existChamp = _dbContext.Championships.Where(w => w.Id == championship.Id)?.FirstOrDefault();
+                if (existChamp != null)
                 {
-                    _dbContext.Championships.Update(championship);
-                    _dbContext.SaveChanges();
-                    return true;
+                    if (championship != null)
+                    {
+                        existChamp.Title = championship.Title;
+                        existChamp.Description = championship.Description;
+                        existChamp.StartDate = championship.StartDate;
+
+                        _dbContext.Championships.Update(existChamp);
+                        _dbContext.SaveChanges();
+                        return true;
+                    }
+                    else
+                        return false;
                 }
                 else
-                    return false;
+                    throw new Exception("Championship não encontrada");
             }
             catch (Exception ex)
             {

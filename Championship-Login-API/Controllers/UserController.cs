@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using Championship_Login_API.Enums;
 using Championship_Login_API.Models;
 using CoreAPI.Business;
 using CoreAPI.Repositories;
@@ -99,6 +100,22 @@ namespace CoreAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("{userEnum}")]
+        public async Task<IActionResult> GetUserByUserEnum([FromServices] UserBusiness userBusiness, UserEnum userEnum)
+        {
+            try
+            {
+                var user = await userBusiness.GetUserByUserEnum(userEnum);
+
+                return StatusCode(200, user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromServices] UserBusiness userBusiness, Guid id)
         {
@@ -144,7 +161,7 @@ namespace CoreAPI.Controllers
 
         [Authorize]
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateUserAsync([FromServices] UserBusiness userBusiness, UpdateUser updateUser)
+        public async Task<IActionResult> UpdateUserAsync([FromServices] UserBusiness userBusiness, [FromBody]UpdateUser updateUser)
         {
             try
             {

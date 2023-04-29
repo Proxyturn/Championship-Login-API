@@ -1,4 +1,5 @@
 ﻿using System;
+using Championship_Login_API.Enums;
 using Championship_Login_API.Models;
 using CoreAPI.Repositories;
 using CoreAPI.Util;
@@ -85,6 +86,20 @@ namespace CoreAPI.Business
             }
 
         }
+
+        public async Task<List<User>> GetUserByUserEnum(UserEnum userEnum)
+        {
+            try
+            {
+                return await _userRepository.GetUserByUserEnum(userEnum);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
     }
 }
 
