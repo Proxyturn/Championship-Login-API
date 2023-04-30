@@ -29,6 +29,7 @@ namespace ChampionshipAPI.Repository
                         {
                             Id = championship.Id,
                             Title = championship.Title,
+                            TotalPhases = championship.TotalPhases,
                             Description = championship.Description == null? "Não foi registrada uma descrição para esta competição" : championship.Description,
                             StartDate = championship.StartDate.ToString("dd/MM/yyyy HH:mm"),
                             Status = championship.Status
@@ -89,10 +90,12 @@ namespace ChampionshipAPI.Repository
 
                     return new ChampionshipExternalDetail()
                     {
+                        Id = championships.Id,
                         Title = championships.Title,
                         Description = championships.Description == null ? "Não foi registrada uma descrição para esta competição" : championships.Description,
                         Status = championships.Status,
-                        StartDate= championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
+                        TotalPhases = championships.TotalPhases,
+                        StartDate = championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
                         EndDate = "-",
                         Subscription = subsTeams == null? 0:subsTeams.Count(),
                         Ranking = subsTeams,
@@ -144,6 +147,7 @@ namespace ChampionshipAPI.Repository
                         existChamp.Title = championship.Title;
                         existChamp.Description = championship.Description;
                         existChamp.StartDate = championship.StartDate;
+                        existChamp.TotalPhases = championship.TotalPhases;
 
                         _dbContext.Championships.Update(existChamp);
                         _dbContext.SaveChanges();

@@ -9,6 +9,7 @@ namespace DatabaseProject.Models.Response
         public string Title { get; set; }
         public string Description { get; set; }
         public string StartDate { get; set; }
+        public int TotalPhases { get; set; }
         public ChampionshipStatusEnum Status { get; set; }
     }
 }

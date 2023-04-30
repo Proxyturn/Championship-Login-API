@@ -100,7 +100,7 @@ namespace CoreAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("{userEnum}")]
+        [HttpGet("/getByType/{userEnum}")]
         public async Task<IActionResult> GetUserByUserEnum([FromServices] UserBusiness userBusiness, UserEnum userEnum)
         {
             try
