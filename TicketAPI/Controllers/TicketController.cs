@@ -36,12 +36,12 @@ namespace TicketAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Guid matchId)
+        public async Task<IActionResult> Post([FromBody] CreateTicket createTicket)
         {
             try
             {
                 string userId = (HttpContext.User.Claims.SingleOrDefault(p => p.Type == "userId"))?.Value;
-                return StatusCode(201, await _ticketBusiness.Insert(matchId, userId));
+                return StatusCode(201, await _ticketBusiness.Insert(createTicket.IdMatch, userId));
             }
             catch (Exception ex)
             {
