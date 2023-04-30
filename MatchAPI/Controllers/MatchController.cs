@@ -20,6 +20,7 @@ namespace MatchAPI.Controllers
             _matchBusiness = matchBusiness;
         }
 
+        [Authorize]
         [HttpGet("/getByRefereeId/{IdReferee}")]
         public async Task<IActionResult> GetByRefereeId(Guid IdReferee)
         {
@@ -33,6 +34,7 @@ namespace MatchAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("/getMatchById/{IdMatch}")]
         public async Task<IActionResult> GetMatchId(Guid IdMatch)
         {

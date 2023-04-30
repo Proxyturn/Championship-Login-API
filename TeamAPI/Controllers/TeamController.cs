@@ -9,7 +9,6 @@ using TeamAPI.Business;
 
 namespace TeamAPI.Controllers
 {
-    [Authorize]
     [Route("api/team")]
     public class TeamController : Controller
     {
@@ -20,6 +19,7 @@ namespace TeamAPI.Controllers
             _teamBusiness = teamBusiness;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetUserTeam()
         {

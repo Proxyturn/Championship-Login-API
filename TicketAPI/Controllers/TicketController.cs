@@ -11,7 +11,6 @@ using TicketAPI.Business;
 
 namespace TicketAPI.Controllers
 {
-    [Authorize]
     [Route("api/ticket")]
     public class TicketController : Controller
     {
@@ -20,7 +19,8 @@ namespace TicketAPI.Controllers
         {
             _ticketBusiness = ticketBusiness;
         }
-        
+
+        [AllowAnonymous]
         [HttpGet("/getAll/available")]
         public async Task<IActionResult> GetAllAvailable()
         {
@@ -34,6 +34,7 @@ namespace TicketAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Guid matchId)
         {
