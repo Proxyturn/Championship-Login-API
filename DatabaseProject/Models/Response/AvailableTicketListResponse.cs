@@ -10,8 +10,7 @@ namespace DatabaseProject.Models.Response
         public string ChampionshipStartDate { get; set; }
         public string MatchTeamA { get; set; }
         public string MatchTeamB { get; set; }
-        public int MatchTotalTicket { get; set; }
-        public int TotalSold { get; set; }
+        public decimal AvailablePercentage { get; set; }
     }
 }
 

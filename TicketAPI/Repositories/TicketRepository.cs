@@ -33,8 +33,7 @@ namespace TicketAPI.Repositories
                                        ChampionshipStartDate = cm.StartDate.ToString("dd/MM/yyyy HH:mm"),
                                        MatchTeamA = matches.TeamA == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == matches.TeamA).FirstOrDefault().Name,
                                        MatchTeamB = matches.TeamB == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == matches.TeamB).FirstOrDefault().Name,
-                                       MatchTotalTicket = matches.TotalTickets,
-                                       TotalSold = _dbContext.Tickets.Where(w=>w.IdMatch == matches.Id).Count()
+                                       AvailablePercentage = Convert.ToDecimal(_dbContext.Tickets.Where(w => w.IdMatch == matches.Id).Count())/matches.TotalTickets * 100
                                     }).ToList();
                 
                 return ticketsGroup;
