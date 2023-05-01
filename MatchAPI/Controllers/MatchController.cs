@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseProject.Models.Auth.Request;
+using DatabaseProject.Models.Request;
 using MatchAPI.Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,20 @@ namespace MatchAPI.Controllers
             try
             {
                 return StatusCode(200, await _matchBusiness.GetMatchById(IdMatch));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("/atributteReferee")]
+        public async Task<IActionResult> AtributteReferee([FromBody] UpdateMatchReferee updateMatchReferee)
+        {
+            try
+            {
+                return StatusCode(200, await _matchBusiness.UpdateMatchReferee(updateMatchReferee));
             }
             catch (Exception ex)
             {

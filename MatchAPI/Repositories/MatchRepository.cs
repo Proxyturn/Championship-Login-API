@@ -1,6 +1,7 @@
 ﻿using System;
 using Championship_Login_API.Models;
 using DatabaseProject;
+using DatabaseProject.Models.Request;
 using DatabaseProject.Models.Response;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,6 +79,33 @@ namespace MatchAPI.Repository
                 }
                 else
                     return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> UpdateMatchReferee(UpdateMatchReferee updateMatchReferee)
+        {
+            try
+            {
+                Match match = _dbContext.Matchs.Where(w => w.Id == updateMatchReferee.IdMatch)?.FirstOrDefault();
+                if (match != null)
+                {
+                    User existRefereee = _dbContext.Users.Where(w => w.Id == updateMatchReferee.IdReferee)?.FirstOrDefault();
+                    if (existRefereee != null)
+                    {
+                        match.IdReferee = existRefereee.Id;
+                        _dbContext.Matchs.Update(match);
+                        _dbContext.SaveChanges();
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                    return false;
             }
             catch (Exception ex)
             {

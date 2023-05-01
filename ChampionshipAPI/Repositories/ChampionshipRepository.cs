@@ -46,7 +46,7 @@ namespace ChampionshipAPI.Repository
             }
         }
 
-        public async Task<object> GetById(Guid id, Boolean external = true)
+        public async Task<ChampionshipExternalDetail> GetById(Guid id, Boolean external = true)
         {
             try
             {
@@ -67,7 +67,6 @@ namespace ChampionshipAPI.Repository
                                 }).ToList();
                     matches = (from matchs in _dbContext.Matchs
                                where matchs.IdChampion == id
-                               join users in _dbContext.Users on matchs.IdReferee equals users.Id
                                orderby matchs.PhaseNumber
                                select new MatchExternalDetail
                                {
@@ -79,7 +78,8 @@ namespace ChampionshipAPI.Repository
                                    Status = matchs.Status,
                                    IdTeamB = matchs.TeamB,
                                    IdTeamA = matchs.TeamA,
-                                   RefereeName = users.Name,
+                                   IdReferee = matchs.IdReferee,
+                                   RefereeName = matchs.IdReferee == Guid.Empty? "Sem juíz atribuido": _dbContext.Users.Where(w => w.Id == matchs.IdReferee).FirstOrDefault().Name,
                                    TeamAName = matchs.TeamA == Guid.Empty? "W.O": _dbContext.Teams.Where(w=>w.Id == matchs.TeamA).FirstOrDefault().Name,
                                    TeamBName = matchs.TeamB == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == matchs.TeamB).FirstOrDefault().Name,
                                    SoldTickets = (from tickets in _dbContext.Tickets
@@ -103,7 +103,6 @@ namespace ChampionshipAPI.Repository
                     };
                 //}
                     
-                return championships;
             }
             catch (Exception ex)
             {
@@ -169,10 +168,10 @@ namespace ChampionshipAPI.Repository
         {
             try
             {
-                var championship = (await GetById(id,false)) as Championship;
-                if (championship != null)
+                Championship existChamp = _dbContext.Championships.Where(w => w.Id == id)?.FirstOrDefault();
+                if (existChamp != null)
                 {
-                    _dbContext.Championships.Remove(championship);
+                    _dbContext.Championships.Remove(existChamp);
                     _dbContext.SaveChanges();
                     return true;
                 }
@@ -189,11 +188,11 @@ namespace ChampionshipAPI.Repository
         {
             try
             {
-                var championship = (await GetById(idChampionship, false)) as Championship;
+                Championship championship = _dbContext.Championships.Where(w => w.Id == idChampionship)?.FirstOrDefault();
                 if (championship != null)
                 {
                     List<Team> subsTeams = _dbContext.Teams.Where(w => w.IdChampionship == idChampionship).ToList();
-                    List<ChampionshipReferee> subsRef = _dbContext.ChampionshipReferees.Where(cref => cref.ChampionshipId == idChampionship).ToList();
+                    List<ChampionshipReferee> subsRef = _dbContext.ChampionshipReferees.Where(cref => cref.ChampionshipId == idChampionship)?.ToList();
 
                     //impar
                     if (subsTeams.Count() % 2 != 0)
@@ -212,7 +211,7 @@ namespace ChampionshipAPI.Repository
                         {
                             Id = Guid.NewGuid(),
                             IdChampion = idChampionship,
-                            IdReferee = subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId,
+                            IdReferee = subsRef!=null ? subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId : Guid.Empty,
                             Location = "",
                             Name = $"Confronto {match}",
                             PhaseNumber = 1,
@@ -263,9 +262,13 @@ namespace ChampionshipAPI.Repository
         {
             try
             {
-                var championship = await GetById(idChampionship, false);
+                var championship = _dbContext.Championships.Where(w => w.Id == idChampionship)?.FirstOrDefault(); 
                 if (championship != null)
                 {
+                    championship.Status = DatabaseProject.Enums.ChampionshipStatusEnum.Finished;
+                    //championship.WinnerTeam = ;
+                    //championship.SecondTeam = ;
+                    //championship.ThirdTeam = ;
                     return true;
                 }
                 else

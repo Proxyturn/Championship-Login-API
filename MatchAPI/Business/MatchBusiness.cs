@@ -1,5 +1,6 @@
 ﻿using System;
 using Championship_Login_API.Models;
+using DatabaseProject.Models.Request;
 using DatabaseProject.Models.Response;
 using MatchAPI.Repository;
 
@@ -36,6 +37,19 @@ namespace MatchAPI.Business
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<bool> UpdateMatchReferee(UpdateMatchReferee updateMatchReferee)
+        {
+            try
+            {
+                return await _matchRepository.UpdateMatchReferee(updateMatchReferee);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        
     }
 }
 

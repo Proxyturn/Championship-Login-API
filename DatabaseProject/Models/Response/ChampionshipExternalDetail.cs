@@ -26,6 +26,7 @@ namespace DatabaseProject.Models.Response
         public string StartDate { get; set; }
         public int TotalTickets { get; set; }
         public int SoldTickets { get; set; }
+        public Guid IdReferee { get; set; }
         public string RefereeName { get; set; }
         public Guid IdTeamA { get; set; }
         public string TeamAName { get; set; }

@@ -3,6 +3,7 @@ using Championship_Login_API.Models;
 using ChampionshipAPI.Repository;
 using DatabaseProject.Models.Auth.Request;
 using DatabaseProject.Models.Request;
+using DatabaseProject.Models.Response;
 
 namespace ChampionshipAPI.Business
 {
@@ -26,7 +27,7 @@ namespace ChampionshipAPI.Business
             }
         }
 
-        public async Task<object> GetById(Guid id, Boolean external = true)
+        public async Task<ChampionshipExternalDetail> GetById(Guid id, Boolean external = true)
         {
             try
             {
