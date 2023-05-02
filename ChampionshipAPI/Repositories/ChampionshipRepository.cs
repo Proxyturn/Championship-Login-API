@@ -205,13 +205,13 @@ namespace ChampionshipAPI.Repository
 
                     //phase 1
                     int match = 1;
-                    for (int i = 0; i < subsTeams.Count()-1; i = 1+2)
+                    for (int i = 0; i < subsTeams.Count()-1; i = i+2)
                     {
                         _dbContext.Matchs.Add(new Match()
                         {
                             Id = Guid.NewGuid(),
                             IdChampion = idChampionship,
-                            IdReferee = subsRef!=null ? subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId : Guid.Empty,
+                            IdReferee = Guid.Empty,
                             Location = "",
                             Name = $"Confronto {match}",
                             PhaseNumber = 1,
@@ -233,7 +233,7 @@ namespace ChampionshipAPI.Repository
                             {
                                 Id = Guid.NewGuid(),
                                 IdChampion = idChampionship,
-                                IdReferee = subsRef[Convert.ToInt16(new Random().NextInt64(0, subsRef.Count() - 1))].UserId,
+                                IdReferee = Guid.Empty,
                                 Location = "",
                                 Name = $"Confronto {match}",
                                 PhaseNumber = i,
