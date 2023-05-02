@@ -246,6 +246,7 @@ namespace ChampionshipAPI.Repository
                         }
                         totalTeams = totalTeams / 2;
                     }
+                    championship.Status = DatabaseProject.Enums.ChampionshipStatusEnum.OnGoing;
                     _dbContext.SaveChanges();
                     return true;
                 }
