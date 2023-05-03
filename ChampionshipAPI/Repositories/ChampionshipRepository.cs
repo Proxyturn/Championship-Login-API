@@ -95,6 +95,9 @@ namespace ChampionshipAPI.Repository
                         Description = championships.Description == null ? "Não foi registrada uma descrição para esta competição" : championships.Description,
                         Status = championships.Status,
                         TotalPhases = championships.TotalPhases,
+                        First = championships.WinnerTeam,
+                        Second = championships.SecondTeam,
+                        Third = championships.ThirdTeam,
                         StartDate = championships.StartDate.ToString("dd/MM/yyyy HH:mm"),
                         EndDate = "-",
                         Subscription = subsTeams == null? 0:subsTeams.Count(),
@@ -269,18 +272,18 @@ namespace ChampionshipAPI.Repository
                     List<TeamsExternalDetail> subsTeams = new List<TeamsExternalDetail>();
                     subsTeams = (from teams in _dbContext.Teams
                                  where teams.IdChampionship == idChampionship
-                                 orderby teams.Wins
+                                 orderby teams.Wins descending
                                  select new TeamsExternalDetail
                                  {
                                      IdTeam = teams.Id,
                                      Name = teams.Name,
                                      Wins = teams.Wins
                                  }).ToList();
-                    championship.WinnerTeam = subsTeams[0].IdTeam;
-                    championship.SecondTeam = subsTeams[1].IdTeam;
-                    championship.ThirdTeam = subsTeams[2].IdTeam;
+                    championship.WinnerTeam = subsTeams.Count == 0 ? Guid.Empty : subsTeams[0].IdTeam;
+                    championship.SecondTeam = subsTeams.Count == 0 ? Guid.Empty : subsTeams[1].IdTeam;
+                    championship.ThirdTeam = subsTeams.Count == 0 ? Guid.Empty : subsTeams[2].IdTeam;
                     championship.Status = DatabaseProject.Enums.ChampionshipStatusEnum.Finished;
-                    
+                    _dbContext.SaveChanges();
                     return true;
                 }
                 else
