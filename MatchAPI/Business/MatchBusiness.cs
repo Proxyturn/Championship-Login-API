@@ -49,7 +49,30 @@ namespace MatchAPI.Business
                 throw new Exception(ex.Message);
             }
         }
-        
+
+        public async Task<bool> StartMatch(StartMatch startMatch)
+        {
+            try
+            {
+                return await _matchRepository.StartMatch(startMatch);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> FinishMatch(FinishMatch finishMatch)
+        {
+            try
+            {
+                return await _matchRepository.FinishMatch(finishMatch);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
 

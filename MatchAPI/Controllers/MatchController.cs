@@ -62,6 +62,34 @@ namespace MatchAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpPost("/start")]
+        public async Task<IActionResult> StartMatch([FromBody]StartMatch startMatch)
+        {
+            try
+            {
+                return StatusCode(200, await _matchBusiness.StartMatch(startMatch));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("/finish")]
+        public async Task<IActionResult> FinishMatch([FromBody] FinishMatch finishMatch)
+        {
+            try
+            {
+                return StatusCode(200, await _matchBusiness.FinishMatch(finishMatch));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
 

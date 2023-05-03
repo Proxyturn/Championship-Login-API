@@ -112,6 +112,80 @@ namespace MatchAPI.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<bool> StartMatch(StartMatch startMatch)
+        {
+            try
+            {
+                Match match = _dbContext.Matchs.Where(w => w.Id == startMatch.IdMatch)?.FirstOrDefault();
+                if (match != null)
+                {
+                    match.StartDate = DateTime.Now;
+                    match.Status = DatabaseProject.Enums.MatchStatusEnum.OnGoing;
+                    //Criar nova ocorrencia de atividade
+                    _dbContext.Matchs.Update(match);
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    throw new Exception("Não foi encontrado confronto informado");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> FinishMatch(FinishMatch finishMatch)
+        {
+            try
+            {
+                Match match = _dbContext.Matchs.Where(w => w.Id == finishMatch.IdMatch)?.FirstOrDefault();
+                if (match != null)
+                {
+                    match.FinishDate = DateTime.Now;
+                    match.IdWinner = finishMatch.IdWinner;
+                    match.Status = DatabaseProject.Enums.MatchStatusEnum.Finished;
+
+                    Team winnerTeam = _dbContext.Teams.Where(w => w.IdChampionship == match.IdChampion && w.Id == finishMatch.IdWinner)?.FirstOrDefault();
+                    if (winnerTeam != null)
+                    {
+                        winnerTeam.Wins++;
+
+                        List<Match> nextMatches = _dbContext.Matchs.Where(w => w.IdChampion == match.IdChampion && w.PhaseNumber== finishMatch.MatchPhase+1).OrderBy(ob=>ob.Name).ToList();
+                        for (int i = 0; i < nextMatches.Count(); i++)
+                        {
+                            if (nextMatches[i].TeamA == Guid.Empty)
+                            {
+                                nextMatches[i].TeamA = winnerTeam.Id;
+                                _dbContext.Matchs.Update(nextMatches[i]);
+                                break;
+                            }
+                            else if (nextMatches[i].TeamB == Guid.Empty)
+                            {
+                                nextMatches[i].TeamB = winnerTeam.Id;
+                                _dbContext.Matchs.Update(nextMatches[i]);
+                                break;
+                            }
+                        }
+
+                        //Criar nova ocorrencia de atividade
+                        _dbContext.Matchs.Update(match);
+                        _dbContext.Teams.Update(winnerTeam);
+                        _dbContext.SaveChanges();
+                        return true;
+                    }
+                    else
+                        throw new Exception("Vencedor informado não foi encontrado");
+                    
+                }
+                else
+                    throw new Exception("Não foi encontrado confronto informado");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
-

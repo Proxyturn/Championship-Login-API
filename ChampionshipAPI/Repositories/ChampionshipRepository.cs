@@ -58,7 +58,7 @@ namespace ChampionshipAPI.Repository
 
                     subsTeams = (from teams in _dbContext.Teams
                                 where  teams.IdChampionship == id
-                                orderby teams.Wins
+                                orderby teams.Wins descending
                                 select new TeamsExternalDetail
                                 {
                                     IdTeam = teams.Id,
@@ -266,10 +266,21 @@ namespace ChampionshipAPI.Repository
                 var championship = _dbContext.Championships.Where(w => w.Id == idChampionship)?.FirstOrDefault(); 
                 if (championship != null)
                 {
+                    List<TeamsExternalDetail> subsTeams = new List<TeamsExternalDetail>();
+                    subsTeams = (from teams in _dbContext.Teams
+                                 where teams.IdChampionship == idChampionship
+                                 orderby teams.Wins
+                                 select new TeamsExternalDetail
+                                 {
+                                     IdTeam = teams.Id,
+                                     Name = teams.Name,
+                                     Wins = teams.Wins
+                                 }).ToList();
+                    championship.WinnerTeam = subsTeams[0].IdTeam;
+                    championship.SecondTeam = subsTeams[1].IdTeam;
+                    championship.ThirdTeam = subsTeams[2].IdTeam;
                     championship.Status = DatabaseProject.Enums.ChampionshipStatusEnum.Finished;
-                    //championship.WinnerTeam = ;
-                    //championship.SecondTeam = ;
-                    //championship.ThirdTeam = ;
+                    
                     return true;
                 }
                 else
