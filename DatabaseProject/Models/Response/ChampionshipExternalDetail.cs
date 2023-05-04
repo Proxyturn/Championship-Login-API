@@ -27,6 +27,7 @@ namespace DatabaseProject.Models.Response
         public string Name { get; set; }
         public int PhaseNumber { get; set; }
         public string StartDate { get; set; }
+        public string FinishDate { get; set; }
         public int TotalTickets { get; set; }
         public int SoldTickets { get; set; }
         public Guid IdReferee { get; set; }
@@ -35,6 +36,8 @@ namespace DatabaseProject.Models.Response
         public string TeamAName { get; set; }
         public Guid IdTeamB { get; set; }
         public string TeamBName { get; set; }
+        public Guid IdWinner { get; set; }
+        public string WinnnerName { get; set; }
         public MatchStatusEnum Status { get; set; }
     }
 

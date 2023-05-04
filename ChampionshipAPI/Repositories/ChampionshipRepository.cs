@@ -75,13 +75,16 @@ namespace ChampionshipAPI.Repository
                                    PhaseNumber = matchs.PhaseNumber,
                                    TotalTickets = matchs.TotalTickets,
                                    StartDate = matchs.StartDate.ToString("dd/MM/yyyy HH:mm"),
+                                   FinishDate = matchs.FinishDate.ToString("dd/MM/yyyy HH:mm"),
                                    Status = matchs.Status,
                                    IdTeamB = matchs.TeamB,
                                    IdTeamA = matchs.TeamA,
+                                   IdWinner = matchs.IdWinner,
                                    IdReferee = matchs.IdReferee,
                                    RefereeName = matchs.IdReferee == Guid.Empty? "Sem juíz atribuido": _dbContext.Users.Where(w => w.Id == matchs.IdReferee).FirstOrDefault().Name,
                                    TeamAName = matchs.TeamA == Guid.Empty? "W.O": _dbContext.Teams.Where(w=>w.Id == matchs.TeamA).FirstOrDefault().Name,
                                    TeamBName = matchs.TeamB == Guid.Empty ? "W.O" : _dbContext.Teams.Where(w => w.Id == matchs.TeamB).FirstOrDefault().Name,
+                                   WinnnerName = matchs.IdWinner == Guid.Empty ? "-" : _dbContext.Teams.Where(w => w.Id == matchs.IdWinner).FirstOrDefault().Name,
                                    SoldTickets = (from tickets in _dbContext.Tickets
                                                   where tickets.IdMatch == matchs.Id
                                                   select tickets
